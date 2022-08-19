@@ -1,4 +1,3 @@
-import Customer from "./customer";
 import OrderItem from "./order_item";
 
 export default class Order {
