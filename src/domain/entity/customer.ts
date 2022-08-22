@@ -18,6 +18,10 @@ export default class Customer {
     return this._id;
   }
 
+  get name() {
+    return this._name;
+  }
+
   get rewardPoints() {
     return this._rewardPoints;
   }
@@ -43,6 +47,10 @@ export default class Customer {
 
   get Address(): Address {
     return this._address;
+  }
+
+  changeAddress(address: Address) {
+    this._address = address;
   }
 
   activate() {
