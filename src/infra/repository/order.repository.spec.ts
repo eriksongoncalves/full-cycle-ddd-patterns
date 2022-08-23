@@ -147,10 +147,7 @@ describe('Order repository test', () => {
       include: ['items']
     });
 
-    console.log(JSON.stringify(orderModelUpdated.toJSON(), null, 2));
-
     expect(orderModelUpdated.total).toBe(50);
-    // expect(orderModelUpdated.customer_id).toBe('123');
   });
 
   it('should find a order', async () => {
