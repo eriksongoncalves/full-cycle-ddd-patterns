@@ -29,7 +29,11 @@ export default class EventDispatcher implements EventDispatcherInterface {
     eventName: string,
     eventHandler: eventHandlerInterface<eventInterface>
   ): void {
-    throw new Error('Method not implemented.');
+    const index = this.getEventHandlers[eventName].indexOf(eventHandler);
+
+    if (index !== -1) {
+      this.eventHandlers[eventName].splice(index, 1);
+    }
   }
 
   unregisterAll(): void {
