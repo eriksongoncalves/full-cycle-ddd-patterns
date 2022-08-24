@@ -23,11 +23,14 @@ describe('Customer repository test', () => {
   });
 
   it('should create a customer', async () => {
+    const consoleLogMock = jest.spyOn(console, 'log');
     const customerRepository = new CustomerRepository();
     const customer = new Customer('123', 'Customer 1');
     const address = new Address('Street 1', 1, 'Zipcode 1', 'City 1');
-    customer.Address = address;
+    customer.changeAddress(address);
     await customerRepository.create(customer);
+
+    expect(consoleLogMock).toBeCalledTimes(3);
 
     const customerModel = await CustomerModel.findOne({ where: { id: '123' } });
 
@@ -47,7 +50,7 @@ describe('Customer repository test', () => {
     const customerRepository = new CustomerRepository();
     const customer = new Customer('123', 'Customer 1');
     const address = new Address('Street 1', 1, 'Zipcode 1', 'City 1');
-    customer.Address = address;
+    customer.changeAddress(address);
     await customerRepository.create(customer);
 
     customer.changeName('Customer 2');
@@ -70,7 +73,7 @@ describe('Customer repository test', () => {
     const customerRepository = new CustomerRepository();
     const customer = new Customer('123', 'Customer 1');
     const address = new Address('Street 1', 1, 'Zipcode 1', 'City 1');
-    customer.Address = address;
+    customer.changeAddress(address);
     await customerRepository.create(customer);
 
     const customerResult = await customerRepository.find(customer.id);
@@ -90,13 +93,13 @@ describe('Customer repository test', () => {
     const customerRepository = new CustomerRepository();
     const customer1 = new Customer('123', 'Customer 1');
     const address1 = new Address('Street 1', 1, 'Zipcode 1', 'City 1');
-    customer1.Address = address1;
+    customer1.changeAddress(address1);
     customer1.addRewardPoints(10);
     customer1.activate();
 
     const customer2 = new Customer('456', 'Customer 2');
     const address2 = new Address('Street 2', 2, 'Zipcode 2', 'City 2');
-    customer2.Address = address2;
+    customer2.changeAddress(address2);
     customer2.addRewardPoints(20);
 
     await customerRepository.create(customer1);

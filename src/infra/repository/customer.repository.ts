@@ -1,10 +1,18 @@
 import Address from '../../domain/entity/address';
 import Customer from '../../domain/entity/customer';
+import EventDispatcher from '../../domain/event/@shared/event-dispatcher';
+import CustomerCreatedEvent from '../../domain/event/customer/customer-created.event';
+import SendConsoleLog1 from '../../domain/event/customer/handler/send-console-log1.handler';
+import SendConsoleLog2 from '../../domain/event/customer/handler/send-console-log2.handler';
 import CustomerRepositoryInterface from '../../domain/repository/customer-repository-interface';
 import CustomerModel from '../db/sequelize/model/customer.model';
 
 export default class CustomerRepository implements CustomerRepositoryInterface {
   async create(customer: Customer): Promise<void> {
+    const eventDispatcher = new EventDispatcher();
+    const eventHandler = new SendConsoleLog1();
+    const eventHandler2 = new SendConsoleLog2();
+
     await CustomerModel.create({
       id: customer.id,
       name: customer.name,
@@ -15,6 +23,11 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
       active: customer.isActive(),
       rewardPoints: customer.rewardPoints
     });
+
+    eventDispatcher.register('CustomerCreatedEvent', eventHandler);
+    eventDispatcher.register('CustomerCreatedEvent', eventHandler2);
+
+    eventDispatcher.notify(new CustomerCreatedEvent(''));
   }
 
   async update(customer: Customer): Promise<void> {

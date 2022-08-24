@@ -1,3 +1,4 @@
+import EventDispatcher from '../event/@shared/event-dispatcher';
 import Address from './address';
 import Customer from './customer';
 
@@ -24,7 +25,7 @@ describe('Customer unit test', () => {
   it('should activate customer', () => {
     const customer = new Customer('1', 'Erikson');
     const address = new Address('Street 1', 123, '123423', 'São Paulo');
-    customer.Address = address;
+    customer.changeAddress(address);
     customer.activate();
 
     expect(customer.isActive()).toBe(true);
@@ -50,5 +51,22 @@ describe('Customer unit test', () => {
 
     customer.addRewardPoints(20);
     expect(customer.rewardPoints).toBe(20);
+  });
+
+  it('should change address', () => {
+    const consoleLogMock = jest.spyOn(console, 'log');
+    const customer = new Customer('1', 'Erikson');
+
+    expect(customer.Address).toBeUndefined();
+
+    const address = new Address('Street 1', 1, 'Zipcode 1', 'City 1');
+
+    customer.changeAddress(address);
+
+    expect(address._street).toBe('Street 1');
+
+    expect(consoleLogMock).toHaveBeenCalledWith(
+      'Endereço do cliente: 1, Erikson alterado para: Street 1'
+    );
   });
 });
