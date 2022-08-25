@@ -1,7 +1,8 @@
 {
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "@swc/cli": "^0.1.57",

@@ -1,5 +1,4 @@
-import EventDispatcher from '../event/@shared/event-dispatcher';
-import Address from './address';
+import Address from '../value-object/address';
 import Customer from './customer';
 
 describe('Customer unit test', () => {
