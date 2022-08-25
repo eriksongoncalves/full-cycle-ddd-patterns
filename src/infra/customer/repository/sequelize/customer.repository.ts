@@ -1,11 +1,11 @@
-import Address from '../../domain/customer/value-object/address';
-import Customer from '../../domain/customer/entity/customer';
-import EventDispatcher from '../../domain//@shared/event/event-dispatcher';
-import CustomerCreatedEvent from '../../domain/customer/event/customer-created.event';
-import SendConsoleLog1 from '../../domain/customer/event/handler/send-console-log1.handler';
-import SendConsoleLog2 from '../../domain/customer/event/handler/send-console-log2.handler';
-import CustomerRepositoryInterface from '../../domain/customer/repository/customer-repository-interface';
-import CustomerModel from '../db/sequelize/model/customer.model';
+import Address from '../../../../domain/customer/value-object/address';
+import Customer from '../../../../domain/customer/entity/customer';
+import EventDispatcher from '../../../../domain//@shared/event/event-dispatcher';
+import CustomerCreatedEvent from '../../../../domain/customer/event/customer-created.event';
+import SendConsoleLog1 from '../../../../domain/customer/event/handler/send-console-log1.handler';
+import SendConsoleLog2 from '../../../../domain/customer/event/handler/send-console-log2.handler';
+import CustomerRepositoryInterface from '../../../../domain/customer/repository/customer-repository-interface';
+import CustomerModel from './customer.model';
 
 export default class CustomerRepository implements CustomerRepositoryInterface {
   async create(customer: Customer): Promise<void> {
