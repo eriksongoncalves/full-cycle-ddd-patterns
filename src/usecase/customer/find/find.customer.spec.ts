@@ -1,23 +1,22 @@
 import { Sequelize } from 'sequelize-typescript';
-import Address from '../../../domain/entity/address';
-import Customer from '../../../domain/entity/customer';
-import CustomerModel from '../../../infra/db/sequelize/model/customer.model';
-import CustomerRepository from '../../../infra/repository/customer.repository';
+import Customer from '../../../domain/customer/entity/customer';
+import Address from '../../../domain/customer/value-object/address';
+import CustomerModel from '../../../infra/customer/repository/sequelize/customer.model';
+import CustomerRepository from '../../../infra/customer/repository/sequelize/customer.repository';
 import FindCustomerUseCase from './find.usecase';
 
 describe('Test find customer use case', () => {
   let sequelize: Sequelize;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     sequelize = new Sequelize({
       dialect: 'sqlite',
-      storage: ':memory:',
       logging: false,
       sync: { force: true }
     });
 
-    sequelize.addModels([CustomerModel]);
-    sequelize.sync();
+    await sequelize.addModels([CustomerModel]);
+    await sequelize.sync();
   });
 
   afterEach(async () => {
