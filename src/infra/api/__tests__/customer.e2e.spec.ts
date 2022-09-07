@@ -30,4 +30,20 @@ describe('E2E test for customer', () => {
     expect(response.body.address.number).toBe(123);
     expect(response.body.address.zip).toBe('12345');
   });
+
+  it('should throw an error when creating a customer', async () => {
+    const response = await request(app)
+      .post('/customer')
+      .send({
+        name: '',
+        address: {
+          street: 'Street',
+          city: 'City',
+          number: 123,
+          zip: '12345'
+        }
+      });
+
+    expect(response.status).toBe(500);
+  });
 });
