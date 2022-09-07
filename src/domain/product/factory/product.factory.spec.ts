@@ -18,4 +18,12 @@ describe('Product factory unit tests', () => {
     expect(product.price).toBe(2);
     expect(product.constructor.name).toBe('ProductB');
   });
+
+  it('should create a product without a type', () => {
+    const product = ProductFactory.createWithoutType('Product name', 100);
+
+    expect(product.id).toBeDefined();
+    expect(product.name).toBe('Product name');
+    expect(product.price).toBe(100);
+  });
 });

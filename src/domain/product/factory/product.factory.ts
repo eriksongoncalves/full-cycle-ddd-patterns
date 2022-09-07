@@ -19,4 +19,8 @@ export default class ProductFactory {
 
     return actions[type];
   }
+
+  static createWithoutType(name: string, price: number): Product {
+    return new Product(uuid(), name, price);
+  }
 }
