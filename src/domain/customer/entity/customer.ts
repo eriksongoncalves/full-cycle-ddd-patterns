@@ -1,24 +1,22 @@
+import Entity from '../../@shared/entity/entity.abstract';
 import EventDispatcher from '../../@shared/event/event-dispatcher';
+import NotificationError from '../../@shared/notification/notification.error';
 import CustomerCreatedEvent from '../event/customer-created.event';
 import SendConsoleLogWhenAddressChanged from '../event/handler/send-console-log-when-address-changed.handler';
 import Address from '../value-object/address';
 
-export default class Customer {
-  private _id: string;
+export default class Customer extends Entity {
   private _name = '';
   private _address!: Address;
   private _active = false;
   private _rewardPoints = 0;
 
   constructor(id: string, name: string) {
+    super();
     this._id = id;
     this._name = name;
 
     this.validate();
-  }
-
-  get id() {
-    return this._id;
   }
 
   get name() {
@@ -30,12 +28,22 @@ export default class Customer {
   }
 
   validate() {
-    if (this._id.length === 0) {
-      throw new Error('Id is required');
+    if (this.id.length === 0) {
+      this.notification.addError({
+        context: 'customer',
+        message: 'Id is required'
+      });
     }
 
     if (this._name.length === 0) {
-      throw new Error('Name is required');
+      this.notification.addError({
+        context: 'customer',
+        message: 'Name is required'
+      });
+    }
+
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.getErrors());
     }
   }
 
@@ -56,7 +64,7 @@ export default class Customer {
     eventDispatcher.register('CustomerCreatedEvent', eventHandler);
 
     const customerCreatedEvent = new CustomerCreatedEvent({
-      id: this._id,
+      id: this.id,
       name: this._name,
       street: address._street
     });
